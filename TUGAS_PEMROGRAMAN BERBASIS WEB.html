@@ -31,7 +31,7 @@
             overflow-x: hidden;
         }
 
-        /* ================= NAVBAR ================= */
+        
 
         .navbar {
             height: 72px;
@@ -113,7 +113,7 @@
             cursor: pointer;
         }
 
-        /* ================= HERO ================= */
+        
 
         .hero {
             min-height: 560px;
@@ -215,7 +215,7 @@
             border: 1px solid #ddd;
         }
 
-        /* ================= ART ================= */
+        
 
         .art {
             height: 430px;
@@ -272,7 +272,7 @@
             transform: rotate(27deg);
         }
 
-        /* ================= DOTS ================= */
+        
 
         .dot {
             width: 11px;
@@ -313,7 +313,7 @@
             top: 30%;
         }
 
-        /* ================= STACK ================= */
+        
 
         .stack {
             width: 230px;
@@ -448,7 +448,7 @@
             letter-spacing: 1px;
         }
 
-        /* ================= COMPANIES ================= */
+        
 
         .companies {
             min-height: 105px;
@@ -513,7 +513,7 @@
             border: 3px solid #555;
         }
 
-        /* ================= SCROLL ANIMATION ================= */
+        
 
         .company {
             opacity: 0;
@@ -526,7 +526,7 @@
             transform: translateY(0);
         }
 
-        /* ================= MOBILE ================= */
+        
 
         @media (max-width: 900px) {
 
@@ -653,7 +653,7 @@
 
 <body>
 
-    <!-- ================= NAVBAR ================= -->
+    
 
     <header class="navbar">
 
@@ -698,7 +698,7 @@
     </header>
 
 
-    <!-- ================= HERO ================= -->
+    
 
     <main>
 
@@ -739,7 +739,7 @@
             </div>
 
 
-            <!-- ART -->
+            
 
             <div class="art">
 
@@ -784,7 +784,7 @@
         </section>
 
 
-        <!-- ================= COMPANIES ================= -->
+        
 
         <section class="companies">
 
@@ -811,13 +811,11 @@
     </main>
 
 
-    <!-- ================= JAVASCRIPT ================= -->
+    
 
     <script>
 
-        /* ==========================
-           MOBILE MENU
-        ========================== */
+        
 
         const menuButton =
             document.getElementById("menuButton");
@@ -838,9 +836,7 @@
         });
 
 
-        /* ==========================
-           STACK MOUSE MOVEMENT
-        ========================== */
+        
 
         const stack =
             document.getElementById("stack");
@@ -881,9 +877,7 @@
         });
 
 
-        /* ==========================
-           RESET STACK
-        ========================== */
+        
 
         art.addEventListener("mouseleave", function () {
 
@@ -897,9 +891,7 @@
         });
 
 
-        /* ==========================
-           COMPANY SCROLL ANIMATION
-        ========================== */
+        
 
         const companies =
             document.querySelectorAll(".company");
@@ -928,9 +920,7 @@
         });
 
 
-        /* ==========================
-           DEPLOY BUTTON
-        ========================== */
+        
 
         const deployButton =
             document.getElementById("deployButton");
@@ -946,10 +936,7 @@
         });
 
 
-        /* ==========================
-           CLOSE MOBILE MENU
-        ========================== */
-
+       
         document.querySelectorAll(".nav-menu a")
             .forEach(function (link) {
 
