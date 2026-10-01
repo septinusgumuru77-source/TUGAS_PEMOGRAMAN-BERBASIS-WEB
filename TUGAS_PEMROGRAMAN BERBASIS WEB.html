@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Laravel - The clean stack</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --red: #ff2d20;
+            --dark: #18181b;
+            --gray: #71717a;
+            --border: #e5e5e5;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--dark);
+            background: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 72px;
+            padding: 0 7%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-bottom: 1px solid #eee;
+
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo {
+            color: var(--red);
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 28px;
+        }
+
+        .nav-menu a {
+            color: #555;
+            font-size: 13px;
+            text-decoration: none;
+            transition: .2s;
+        }
+
+        .nav-menu a:hover {
+            color: var(--red);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .nav-right a {
+            color: #555;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .github {
+            color: #555;
+            font-size: 13px;
+        }
+
+        .search {
+            width: 150px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 11px;
+
+            border: 1px solid #ddd;
+            border-radius: 7px;
+
+            color: #999;
+            font-size: 12px;
+        }
+
+        .menu-button {
+            display: none;
+
+            border: 0;
+            background: none;
+
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 560px;
+
+            padding: 65px 8% 50px;
+
+            display: grid;
+            grid-template-columns: 52% 48%;
+
+            align-items: center;
+        }
+
+        .hero-content {
+            opacity: 0;
+            transform: translateY(35px);
+
+            animation: heroIn .8s ease forwards;
+        }
+
+        @keyframes heroIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .title {
+            max-width: 690px;
+
+            font-size: clamp(48px, 5.2vw, 74px);
+            line-height: .99;
+
+            letter-spacing: -4px;
+            font-weight: 500;
+        }
+
+        .description {
+            max-width: 570px;
+
+            margin-top: 28px;
+
+            color: var(--gray);
+
+            font-size: 17px;
+            line-height: 1.65;
+        }
+
+        .buttons {
+            margin-top: 30px;
+
+            display: flex;
+            gap: 13px;
+        }
+
+        .btn {
+            min-height: 45px;
+
+            padding: 0 20px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 7px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            transition:
+                transform .2s,
+                background .2s,
+                box-shadow .2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            color: white;
+            background: var(--red);
+
+            box-shadow:
+                0 8px 20px rgba(255,45,32,.18);
+        }
+
+        .btn-primary:hover {
+            background: #e5261c;
+
+            box-shadow:
+                0 12px 25px rgba(255,45,32,.25);
+        }
+
+        .btn-secondary {
+            color: #444;
+            background: white;
+            border: 1px solid #ddd;
+        }
+
+        /* ================= ART ================= */
+
+        .art {
+            height: 430px;
+
+            position: relative;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .wire {
+            position: absolute;
+
+            height: 1px;
+
+            background: #d5d5d5;
+
+            transform-origin: left center;
+        }
+
+        .wire1 {
+            width: 260px;
+            left: 2%;
+            top: 31%;
+            transform: rotate(-27deg);
+        }
+
+        .wire2 {
+            width: 230px;
+            left: 8%;
+            top: 51%;
+            transform: rotate(-27deg);
+        }
+
+        .wire3 {
+            width: 190px;
+            left: 17%;
+            top: 69%;
+            transform: rotate(-27deg);
+        }
+
+        .wire4 {
+            width: 220px;
+            right: 5%;
+            top: 32%;
+            transform: rotate(27deg);
+        }
+
+        .wire5 {
+            width: 180px;
+            right: 12%;
+            top: 53%;
+            transform: rotate(27deg);
+        }
+
+        /* ================= DOTS ================= */
+
+        .dot {
+            width: 11px;
+            height: 11px;
+
+            position: absolute;
+
+            border: 2px solid #777;
+            border-radius: 50%;
+
+            background: white;
+            z-index: 10;
+
+            transition: transform .4s;
+        }
+
+        .dot:hover {
+            transform: scale(1.8);
+        }
+
+        .dot1 {
+            left: 19%;
+            top: 27%;
+        }
+
+        .dot2 {
+            left: 12%;
+            top: 48%;
+        }
+
+        .dot3 {
+            left: 29%;
+            top: 67%;
+        }
+
+        .dot4 {
+            right: 18%;
+            top: 30%;
+        }
+
+        /* ================= STACK ================= */
+
+        .stack {
+            width: 230px;
+            height: 310px;
+
+            position: relative;
+            z-index: 20;
+
+            transform:
+                rotate(-2deg)
+                perspective(700px)
+                rotateY(-7deg);
+
+            filter:
+                drop-shadow(
+                    20px 25px 18px
+                    rgba(0,0,0,.16)
+                );
+
+            opacity: 0;
+            transform-origin: center;
+
+            animation: stackIn 1s .25s ease forwards;
+        }
+
+        @keyframes stackIn {
+            from {
+                opacity: 0;
+                transform:
+                    translateY(50px)
+                    rotate(-8deg)
+                    perspective(700px)
+                    rotateY(-20deg);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0)
+                    rotate(-2deg)
+                    perspective(700px)
+                    rotateY(-7deg);
+            }
+        }
+
+        .layer {
+            position: absolute;
+
+            width: 215px;
+            height: 62px;
+
+            left: 8px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 2px solid #888;
+
+            font-weight: bold;
+
+            transition:
+                transform .35s,
+                box-shadow .35s;
+        }
+
+        .layer:hover {
+            box-shadow:
+                0 10px 20px rgba(0,0,0,.15);
+        }
+
+        .top {
+            top: 0;
+            left: 25px;
+
+            background: #f5f5f5;
+
+            transform: translateX(10px);
+        }
+
+        .application {
+            top: 54px;
+
+            background: #fff;
+
+            color: #666;
+
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+
+        .laravel {
+            top: 111px;
+
+            height: 72px;
+
+            background: var(--red);
+
+            border-color: #c81e17;
+
+            color: white;
+
+            font-size: 27px;
+
+            z-index: 5;
+        }
+
+        .database {
+            top: 181px;
+            left: -7px;
+
+            background: #f1f1f1;
+
+            color: #666;
+
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+
+        .php {
+            top: 240px;
+            left: -18px;
+
+            background: #202020;
+
+            border-color: #111;
+
+            color: white;
+
+            font-size: 12px;
+
+            letter-spacing: 1px;
+        }
+
+        /* ================= COMPANIES ================= */
+
+        .companies {
+            min-height: 105px;
+
+            padding: 25px 8%;
+
+            border-top: 1px solid #eee;
+
+            display: grid;
+
+            grid-template-columns:
+                1.5fr
+                1fr
+                1fr
+                1fr;
+
+            align-items: center;
+
+            gap: 30px;
+        }
+
+        .company-title {
+            color: #777;
+
+            font-size: 10px;
+            font-weight: bold;
+
+            line-height: 1.5;
+
+            text-transform: uppercase;
+            letter-spacing: .7px;
+        }
+
+        .company {
+            display: flex;
+            justify-content: center;
+
+            color: #555;
+
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .canon {
+            font-family: Georgia, serif;
+        }
+
+        .pfizer {
+            color: #0874c9;
+        }
+
+        .square {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .square-icon {
+            width: 16px;
+            height: 16px;
+
+            border: 3px solid #555;
+        }
+
+        /* ================= SCROLL ANIMATION ================= */
+
+        .company {
+            opacity: 0;
+            transform: translateY(15px);
+            transition: .7s;
+        }
+
+        .company.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 900px) {
+
+            .nav-menu {
+                display: none;
+
+                position: absolute;
+
+                top: 72px;
+                left: 0;
+                right: 0;
+
+                padding: 20px;
+
+                flex-direction: column;
+                align-items: center;
+
+                gap: 20px;
+
+                background: white;
+
+                border-bottom: 1px solid #eee;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .menu-button {
+                display: block;
+            }
+
+            .nav-right {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+
+                text-align: center;
+
+                padding-top: 60px;
+            }
+
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .description {
+                max-width: 600px;
+            }
+
+            .buttons {
+                justify-content: center;
+            }
+
+            .art {
+                margin-top: 25px;
+            }
+
+            .companies {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .company-title {
+                grid-column: 1 / -1;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            .navbar {
+                height: 65px;
+                padding: 0 6%;
+            }
+
+            .nav-menu {
+                top: 65px;
+            }
+
+            .hero {
+                padding:
+                    50px 7%
+                    20px;
+            }
+
+            .title {
+                font-size: 44px;
+                letter-spacing: -2.5px;
+            }
+
+            .description {
+                font-size: 15px;
+            }
+
+            .buttons {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .art {
+                height: 380px;
+                transform: scale(.8);
+                margin-top: -10px;
+            }
+
+            .companies {
+                grid-template-columns: 1fr;
+            }
+
+            .company-title {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <a href="#" class="logo">
+            Laravel
+        </a>
+
+        <nav class="nav-menu" id="navMenu">
+
+            <a href="#">Framework ▾</a>
+            <a href="#">Products ▾</a>
+            <a href="#">Resources ▾</a>
+            <a href="#">Events ▾</a>
+            <a href="#">Docs</a>
+
+        </nav>
+
+        <div class="nav-right">
+
+            <span class="github">
+                ◉ 85K
+            </span>
+
+            <a href="#">
+                Sign in
+            </a>
+
+            <div class="search">
+                ⌕ &nbsp; Search docs
+            </div>
+
+        </div>
+
+        <button
+            class="menu-button"
+            id="menuButton"
+            aria-label="Menu"
+        >
+            ☰
+        </button>
+
+    </header>
+
+
+    <!-- ================= HERO ================= -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <h1 class="title">
+                    SISTEM TEKNOLOGI INFORMASI
+
+                    UNIVERSITAS HALMAHERA
+                </h1>
+
+                <p class="description">
+                    Laravel is batteries-included so everyone can
+                    build and ship web apps at ridiculous speed.
+                </p>
+
+                <div class="buttons">
+
+                    <a
+                        href="#"
+                        class="btn btn-primary"
+                        id="deployButton"
+                    >
+                        Deploy on Cloud →
+                    </a>
+
+                    <a
+                        href="#"
+                        class="btn btn-secondary"
+                    >
+                        View framework docs
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- ART -->
+
+            <div class="art">
+
+                <div class="wire wire1"></div>
+                <div class="wire wire2"></div>
+                <div class="wire wire3"></div>
+                <div class="wire wire4"></div>
+                <div class="wire wire5"></div>
+
+                <div class="dot dot1"></div>
+                <div class="dot dot2"></div>
+                <div class="dot dot3"></div>
+                <div class="dot dot4"></div>
+
+
+                <div class="stack" id="stack">
+
+                    <div class="layer top">
+                        ● &nbsp; ● &nbsp; ●
+                    </div>
+
+                    <div class="layer application">
+                        APPLICATION
+                    </div>
+
+                    <div class="layer laravel">
+                        Laravel
+                    </div>
+
+                    <div class="layer database">
+                        DATABASE
+                    </div>
+
+                    <div class="layer php">
+                        PHP
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= COMPANIES ================= -->
+
+        <section class="companies">
+
+            <div class="company-title">
+                POWERING IDEAS FOR<br>
+                THE BEST & BRIGHTEST
+            </div>
+
+            <div class="company">
+                Canon
+            </div>
+
+            <div class="company pfizer">
+                ◉ pfizer
+            </div>
+
+            <div class="company square">
+                <span class="square-icon"></span>
+                Square
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        /* ==========================
+           MOBILE MENU
+        ========================== */
+
+        const menuButton =
+            document.getElementById("menuButton");
+
+        const navMenu =
+            document.getElementById("navMenu");
+
+        menuButton.addEventListener("click", function () {
+
+            navMenu.classList.toggle("active");
+
+            if (navMenu.classList.contains("active")) {
+                menuButton.textContent = "✕";
+            } else {
+                menuButton.textContent = "☰";
+            }
+
+        });
+
+
+        /* ==========================
+           STACK MOUSE MOVEMENT
+        ========================== */
+
+        const stack =
+            document.getElementById("stack");
+
+        const art =
+            document.querySelector(".art");
+
+        art.addEventListener("mousemove", function (event) {
+
+            const rect =
+                art.getBoundingClientRect();
+
+            const x =
+                event.clientX - rect.left;
+
+            const y =
+                event.clientY - rect.top;
+
+            const centerX =
+                rect.width / 2;
+
+            const centerY =
+                rect.height / 2;
+
+            const rotateY =
+                (x - centerX) / 30;
+
+            const rotateX =
+                (centerY - y) / 30;
+
+            stack.style.transform = `
+                perspective(700px)
+                rotateX(${rotateX}deg)
+                rotateY(${rotateY - 7}deg)
+                rotateZ(-2deg)
+            `;
+
+        });
+
+
+        /* ==========================
+           RESET STACK
+        ========================== */
+
+        art.addEventListener("mouseleave", function () {
+
+            stack.style.transform = `
+                perspective(700px)
+                rotateX(0deg)
+                rotateY(-7deg)
+                rotateZ(-2deg)
+            `;
+
+        });
+
+
+        /* ==========================
+           COMPANY SCROLL ANIMATION
+        ========================== */
+
+        const companies =
+            document.querySelectorAll(".company");
+
+        const observer =
+            new IntersectionObserver(
+                function (entries) {
+
+                    entries.forEach(function (entry) {
+
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("show");
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.2
+                }
+            );
+
+
+        companies.forEach(function (company) {
+            observer.observe(company);
+        });
+
+
+        /* ==========================
+           DEPLOY BUTTON
+        ========================== */
+
+        const deployButton =
+            document.getElementById("deployButton");
+
+        deployButton.addEventListener("click", function (event) {
+
+            event.preventDefault();
+
+            alert(
+                "Welcome to Laravel Cloud!"
+            );
+
+        });
+
+
+        /* ==========================
+           CLOSE MOBILE MENU
+        ========================== */
+
+        document.querySelectorAll(".nav-menu a")
+            .forEach(function (link) {
+
+                link.addEventListener("click", function () {
+
+                    navMenu.classList.remove("active");
+
+                    menuButton.textContent = "☰";
+
+                });
+
+            });
+
+    </script>
+
+</body>
+</html>
